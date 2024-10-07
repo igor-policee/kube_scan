@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      # 1. spec.securityContext.fsGroup
+      securityContext:
+        fsGroup: 2000
+        # 2. spec.securityContext.runAsUser
+        runAsUser: 1000
+      # 3. spec.hostPID
+      hostPID: false
+      # 4. spec.hostIPC
+      hostIPC: false
+      # 5. spec.hostNetwork
+      hostNetwork: false
+      # 7. spec.serviceAccountName
+      serviceAccountName: nginx-service-account
+      containers:
+        - name: nginx
+          # 17. spec.containers.image
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+              # 15. spec.containers.ports.hostPort
+              hostPort: 0
+          # 16. spec.containers.readinessProbe
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          # Параметры безопасности контейнера
+          securityContext:
+            # 10. spec.containers.securityContext.capabilities.drop
+            capabilities:
+              drop:
+                - ALL
+              # 11. spec.containers.securityContext.capabilities.add
+              add:
+                - NET_BIND_SERVICE
+            # 12. spec.containers.securityContext.runAsUser
+            runAsUser: 1000
+            # 13. spec.containers.securityContext.allowPrivilegeEscalation
+            allowPrivilegeEscalation: false
+            # 14. spec.containers.securityContext.privileged
+            privileged: false
+      # 6. spec.volumes
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+      # 8. spec.serviceAccount
+      serviceAccount: nginx-service-account
+      # 9. spec.nodeName (оставлено пустым, чтобы позволить Kubernetes выбрать узел)

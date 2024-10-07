@@ -91,7 +91,7 @@ def get_pod_security_contexts_and_parameters(namespace, kube_config):
             image = container.image
             print(f"    spec.containers.image: {image}")
 
-    print("\n")
+        print("\n")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Kubernetes Pod Security Context and Parameters")

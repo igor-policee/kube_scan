@@ -2,7 +2,7 @@ import argparse
 from kubernetes import client, config
 
 
-def get_pod_security_contexts_and_parameters(ns, kube_config):
+def get_pod_security_contexts_and_parameters(namespace, kube_config):
     # Загружаем конфигурацию
     config.load_kube_config(kube_config)
 
@@ -10,7 +10,7 @@ def get_pod_security_contexts_and_parameters(ns, kube_config):
     v1 = client.CoreV1Api()
 
     # Получаем список подов в заданном namespace
-    pods = v1.list_namespaced_pod(ns)
+    pods = v1.list_namespaced_pod(namespace)
 
     for pod in pods.items:
         print(f"Pod name: {pod.metadata.name}")
@@ -90,7 +90,7 @@ def get_pod_security_contexts_and_parameters(ns, kube_config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Kubernetes Pod Security Context and Parameters")
-    parser.add_argument("--ns", default="default", help="The namespace to inspect.")
+    parser.add_argument("--namespace", default="default", help="The namespace to inspect.")
     parser.add_argument("--kubeconfig", default="~/.kube/config", help="Path to the kubeconfig file.")
     args = parser.parse_args()
 

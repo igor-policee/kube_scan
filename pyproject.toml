@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "kube-scan"
+name = "kube_scan"
 version = "0.1.0"
 description = ""
 authors = ["Igor Policee <ipolishchuk@astralinux.ru>"]

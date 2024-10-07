@@ -12,6 +12,10 @@ def get_pod_security_contexts_and_parameters(namespace, kube_config):
     # Получаем список подов в заданном namespace
     pods = v1.list_namespaced_pod(namespace)
 
+    print(f"Selected parameters:"
+          f"Namespace: {namespace}"
+          f"Kubeconfig: {kube_config}")
+
     for pod in pods.items:
         print(f"Pod name: {pod.metadata.name}")
 

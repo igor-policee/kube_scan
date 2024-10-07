@@ -4,7 +4,7 @@ from kubernetes import client, config
 
 def get_pod_security_contexts_and_parameters(ns, kube_config):
     # Загружаем конфигурацию
-    config.load_kube_config("kube-config")
+    config.load_kube_config(kube_config)
 
     # Создаем клиент для работы с API
     v1 = client.CoreV1Api()

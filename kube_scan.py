@@ -90,7 +90,7 @@ def get_pod_security_contexts_and_parameters(ns, kube_config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Kubernetes Pod Security Context and Parameters")
-    parser.add_argument("--ns", required=True, help="The namespace to inspect.")
+    parser.add_argument("--ns", default="default", help="The namespace to inspect.")
     parser.add_argument("--kubeconfig", default="~/.kube/config", help="Path to the kubeconfig file.")
     args = parser.parse_args()
 
